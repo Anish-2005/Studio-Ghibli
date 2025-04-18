@@ -80,6 +80,9 @@ const GhibliLanding = () => {
     // Theme state with localStorage initialization
     
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Mobile menu toggle
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const [darkMode, setDarkMode] = useState(() => {
       if (typeof window !== 'undefined') {
         const savedTheme = localStorage.getItem('ghibliDarkMode');
@@ -155,123 +158,161 @@ const GhibliLanding = () => {
       }
     }, []);
   
-  return (
-    <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 'dark bg-ghibli-dark text-white' : 'bg-ghibli-light text-ghibli-dark'}`}>
-      {/* Animated Background Elements */}
-      <div className="fixed inset-0 overflow-hidden -z-10">
-        {/* Day/Night sky gradient */}
-        <div className={`absolute inset-0 transition-colors duration-700 ${darkMode ? 'bg-gradient-to-b from-indigo-900 via-purple-900 to-ghibli-dark' : 'bg-gradient-to-b from-blue-200 via-blue-100 to-ghibli-light'}`}></div>
-        
-        {/* Floating clouds */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(5)].map((_, i) => (
-            <div 
-              key={`cloud-${i}`} 
-              ref={el => parallaxRefs.clouds.current[i] = el}
-              className={`absolute opacity-70 ${darkMode ? 'text-gray-700' : 'text-white'}`}
-              style={{
-                left: `${i * 20}%`, 
-                top: `${i * 15 + 5}%`,
-                transform: `scale(${1 + i * 0.5})`,
-                transition: 'color 1s ease'
-              }}
-            >
-              <CloudIcon className={`w-32 h-16 animate-float`} style={{ animationDelay: `${i * 0.5}s` }} />
-            </div>
-          ))}
-        </div>
-        
-        {/* Floating spirits - only visible in dark mode */}
-        <div className={`absolute inset-0 overflow-hidden transition-opacity duration-1000 ${darkMode ? 'opacity-80' : 'opacity-0'}`}>
-          {[...Array(3)].map((_, i) => (
-            <div 
-              key={`spirit-${i}`} 
-              ref={el => parallaxRefs.spirits.current[i] = el}
-              className="absolute text-gray-500"
-              style={{
-                right: `${i * 25 + 10}%`, 
-                top: `${i * 20 + 15}%`,
-                transform: `scale(${0.5 + i * 0.3})`,
-                opacity: 0.7
-              }}
-            >
-              <SpiritIcon className="w-16 h-16 animate-float" style={{ animationDelay: `${i * 0.7}s` }} />
-            </div>
-          ))}
-        </div>
-        
-        {/* Moving foreground */}
-        <div 
-          ref={parallaxRefs.foreground.current}
-          className="absolute bottom-0 w-full h-64"
-        >
-          {/* Grass/water foreground */}
-          <div className={`absolute bottom-0 w-full h-64 transition-colors duration-700 ${darkMode ? 'bg-gradient-to-t from-gray-900 to-transparent' : 'bg-gradient-to-t from-green-600 to-transparent'}`}></div>
-        </div>
-      </div>
-      
-      {/* Navigation Bar */}
-      <nav className={`sticky top-0 z-50 backdrop-blur-md bg-opacity-80 ${darkMode ? 'bg-ghibli-dark' : 'bg-white'} transition-all duration-500 py-4 px-8 flex justify-between items-center shadow-lg`}>
-        <div className="flex items-center">
-          <TotoroIcon className={`w-10 h-10 mr-3 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`} />
-          <h1 className="font-ghibli text-2xl font-bold text-ghibli-teal">Studio Ghibli World</h1>
-        </div>
-        
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="/movie" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Movies</a>
-          <a href="/character" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Characters</a>
-          <a href="#worlds" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Worlds</a>
-          <a href="#gallery" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Gallery</a>
-          <a href="#about" className="font-medium hover:text-ghibli-teal transition-colors duration-300">About</a>
-          <a href="/create" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Create Your Movie</a>
-        </div>
-        
-        {/* Theme Toggle Button */}
-        <button 
-          onClick={toggleDarkMode} 
-          className={`theme-toggle p-2 rounded-full transition-colors duration-500 focus:outline-none ${darkMode ? 'bg-yellow-300 text-ghibli-dark' : 'bg-indigo-900 text-yellow-200'}`}
-          aria-label="Toggle Dark Mode"
-        >
-          {darkMode ? (
-            <div className="relative">
-              <div className="w-6 h-6 rounded-full bg-yellow-300"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <TotoroIcon className="w-5 h-5 text-ghibli-dark transform hover:-translate-y-1 transition-transform duration-300" />
+    return (
+      <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 'dark bg-ghibli-dark text-white' : 'bg-ghibli-light text-ghibli-dark'}`}>
+        {/* Animated Background Elements */}
+        <div className="fixed inset-0 overflow-hidden -z-10">
+          {/* Day/Night sky gradient */}
+          <div className={`absolute inset-0 transition-colors duration-700 ${darkMode ? 'bg-gradient-to-b from-indigo-900 via-purple-900 to-ghibli-dark' : 'bg-gradient-to-b from-blue-200 via-blue-100 to-ghibli-light'}`}></div>
+          
+          {/* Floating clouds */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(5)].map((_, i) => (
+              <div 
+                key={`cloud-${i}`} 
+                ref={el => parallaxRefs.clouds.current[i] = el}
+                className={`absolute opacity-70 ${darkMode ? 'text-gray-700' : 'text-white'}`}
+                style={{
+                  left: `${i * 20}%`, 
+                  top: `${i * 15 + 5}%`,
+                  transform: `scale(${1 + i * 0.5})`,
+                  transition: 'color 1s ease'
+                }}
+              >
+                <CloudIcon className={`w-32 h-16 animate-float`} style={{ animationDelay: `${i * 0.5}s` }} />
               </div>
-            </div>
-          ) : (
-            <div className="relative">
-              <div className="w-6 h-6 rounded-full bg-indigo-900 border-2 border-blue-200"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <CatsIcon className="w-5 h-5 text-yellow-200 transform hover:-translate-y-1 transition-transform duration-300" />
+            ))}
+          </div>
+          
+          {/* Floating spirits - only visible in dark mode */}
+          <div className={`absolute inset-0 overflow-hidden transition-opacity duration-1000 ${darkMode ? 'opacity-80' : 'opacity-0'}`}>
+            {[...Array(3)].map((_, i) => (
+              <div 
+                key={`spirit-${i}`} 
+                ref={el => parallaxRefs.spirits.current[i] = el}
+                className="absolute text-gray-500"
+                style={{
+                  right: `${i * 25 + 10}%`, 
+                  top: `${i * 20 + 15}%`,
+                  transform: `scale(${0.5 + i * 0.3})`,
+                  opacity: 0.7
+                }}
+              >
+                <SpiritIcon className="w-16 h-16 animate-float" style={{ animationDelay: `${i * 0.7}s` }} />
               </div>
-            </div>
-          )}
-        </button>
-      </nav>
-      
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center px-6 py-24 overflow-hidden">
-        <div className="container mx-auto relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className={`font-ghibli text-5xl md:text-7xl mb-6 font-bold ${darkMode ? 'text-ghibli-teal' : 'text-ghibli-blue'} transition-colors duration-500`}>
-              Discover the Magic of Ghibli
-            </h1>
-            
-            <p className={`text-xl md:text-2xl mb-10 ${darkMode ? 'text-gray-300' : 'text-gray-700'} transition-colors duration-500`}>
-              Step into worlds of wonder, imagination, and heart-warming stories that transcend time and culture.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-teal text-ghibli-dark' : 'bg-ghibli-blue text-white'} shadow-lg hover:shadow-xl`}>
-                Explore Films
-              </button>
-              <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-transparent text-ghibli-teal border-2 border-ghibli-teal' : 'bg-transparent text-ghibli-blue border-2 border-ghibli-blue'} hover:shadow-lg`}>
-                Meet Characters
-              </button>
-            </div>
+            ))}
+          </div>
+          
+          {/* Moving foreground */}
+          <div 
+            ref={parallaxRefs.foreground.current}
+            className="absolute bottom-0 w-full h-64"
+          >
+            {/* Grass/water foreground */}
+            <div className={`absolute bottom-0 w-full h-64 transition-colors duration-700 ${darkMode ? 'bg-gradient-to-t from-gray-900 to-transparent' : 'bg-gradient-to-t from-green-600 to-transparent'}`}></div>
           </div>
         </div>
+  
+        {/* Navigation Bar */}
+        <nav className={`sticky top-0 z-50 backdrop-blur-md bg-opacity-80 ${darkMode ? 'bg-ghibli-dark' : 'bg-white'} transition-all duration-500 py-4 px-8 flex justify-between items-center shadow-lg`}>
+          <div className="flex items-center">
+            <TotoroIcon className={`w-10 h-10 mr-3 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`} />
+            <h1 className="font-ghibli text-2xl font-bold text-ghibli-teal">Studio Ghibli World</h1>
+          </div>
+  
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="/movie" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Movies</a>
+            <a href="/character" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Characters</a>
+            <a href="#worlds" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Worlds</a>
+            <a href="#gallery" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Gallery</a>
+            <a href="#about" className="font-medium hover:text-ghibli-teal transition-colors duration-300">About</a>
+            <a href="/create" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Create Your Movie</a>
+            
+            {/* Desktop Theme Toggle */}
+            <button 
+              onClick={toggleDarkMode} 
+              className={`p-2 rounded-full transition-colors duration-500 ${darkMode ? 'bg-yellow-300 text-ghibli-dark' : 'bg-indigo-900 text-yellow-200'}`}
+              aria-label="Toggle Dark Mode"
+            >
+              {darkMode ? (
+                <TotoroIcon className="w-5 h-5" />
+              ) : (
+                <CatsIcon className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+  
+          {/* Mobile Controls */}
+          <div className="flex items-center space-x-4 md:hidden">
+            {/* Mobile Theme Toggle */}
+            <button 
+              onClick={toggleDarkMode} 
+              className={`p-2 rounded-full transition-colors duration-500 ${darkMode ? 'bg-yellow-300 text-ghibli-dark' : 'bg-indigo-900 text-yellow-200'}`}
+            >
+              {darkMode ? (
+                <TotoroIcon className="w-5 h-5" />
+              ) : (
+                <CatsIcon className="w-5 h-5" />
+              )}
+            </button>
+  
+            {/* Hamburger Menu Button */}
+            <button 
+              onClick={toggleMenu}
+              className={`p-2 rounded-md ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-200'}`}
+            >
+              {isMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+  
+          {/* Mobile Menu */}
+          {/* Mobile Menu */}
+{isMenuOpen && (
+  <div className={`absolute top-full left-0 right-0 md:hidden backdrop-blur-md bg-opacity-100 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+    <div className="px-8 py-4 space-y-4">
+      <a href="/movie" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Movies</a>
+      <a href="/character" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Characters</a>
+      <a href="#worlds" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Worlds</a>
+      <a href="#gallery" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Gallery</a>
+      <a href="#about" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">About</a>
+      <a href="/create" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Create Your Movie</a>
+    </div>
+  </div>
+)}
+        </nav>
+  
+        {/* Hero Section */}
+        <section className="relative min-h-screen flex items-center px-6 py-24 overflow-hidden">
+          <div className="container mx-auto relative z-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className={`font-ghibli text-5xl md:text-7xl mb-6 font-bold ${darkMode ? 'text-ghibli-teal' : 'text-ghibli-blue'} transition-colors duration-500`}>
+                Discover the Magic of Ghibli
+              </h1>
+              
+              <p className={`text-xl md:text-2xl mb-10 ${darkMode ? 'text-gray-300' : 'text-gray-700'} transition-colors duration-500`}>
+                Step into worlds of wonder, imagination, and heart-warming stories that transcend time and culture.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-teal text-ghibli-dark' : 'bg-ghibli-blue text-white'} shadow-lg hover:shadow-xl`}>
+                  Explore Films
+                </button>
+                <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-transparent text-ghibli-teal border-2 border-ghibli-teal' : 'bg-transparent text-ghibli-blue border-2 border-ghibli-blue'} hover:shadow-lg`}>
+                  Meet Characters
+                </button>
+              </div>
+            </div>
+          </div>
+  
         
         {/* Floating characters */}
         <div className="absolute top-1/4 left-10 md:left-24 animate-float opacity-75" style={{ animationDelay: '0.5s' }}>
