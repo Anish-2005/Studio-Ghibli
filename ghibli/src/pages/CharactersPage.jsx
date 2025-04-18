@@ -109,7 +109,7 @@ const CharactersPage = () => {
         {
           name: "Totoro",
           film: "My Neighbor Totoro",
-          image: "https://www.ghibli.jp/gallery/thumb-totoro019.jpg",
+          image: "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/My_Neighbor_Totoro_-_Tonari_no_Totoro_%28Movie_Poster%29.jpg/250px-My_Neighbor_Totoro_-_Tonari_no_Totoro_%28Movie_Poster%29.jpg",
           species: "Forest Spirit",
           gender: "Male",
           firstAppearance: 1988,
@@ -121,7 +121,7 @@ const CharactersPage = () => {
         {
           name: "Chihiro Ogino",
           film: "Spirited Away",
-          image: "https://www.ghibli.jp/gallery/chihiro01.jpg",
+          image: "https://i.pinimg.com/736x/f9/d2/7a/f9d27ad3363c502c4b6ef6eb7f5c32fa.jpg",
           species: "Human",
           gender: "Female",
           firstAppearance: 2001,
@@ -193,7 +193,7 @@ const CharactersPage = () => {
         {
           name: "Sophie Hatter",
           film: "Howl's Moving Castle",
-          image: "https://www.ghibli.jp/gallery/hawl009.jpg",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDTj0P14vR4zXPTJ38TLWjulA-uWKbpt3P-w&s",
           species: "Human",
           gender: "Female",
           firstAppearance: 2004,
