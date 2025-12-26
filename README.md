@@ -16,7 +16,7 @@ A stunning, immersive web application celebrating the magical universe of Studio
 - **Comprehensive Character Database**: Detailed profiles of beloved Ghibli characters
 # 🌿 Studio Ghibli — Wander & Wonder
 
-![hero](public/hero-placeholder.png)
+![hero](public/hero-placeholder.svg)
 
 ![badge-fan](https://img.shields.io/badge/Fan%20Project-❤-ffb6c1) ![badge-magic](https://img.shields.io/badge/Magic-✨-7b68ee) ![badge-explore](https://img.shields.io/badge/Explore-Worlds-90ee90)
 
@@ -28,9 +28,9 @@ A small, affectionate fan app that invites you to wander Studio Ghibli's gentle,
 
 | Browse | Create | Collect |
 |---:|:---:|:---|
-| ![browse](public/screen-browse.png) | ![create](public/screen-create.png) | ![collect](public/screen-collect.png) |
+| ![browse](public/screen-browse.svg) | ![create](public/screen-create.svg) | ![collect](public/screen-collect.svg) |
 
-*Images above are placeholders — drop screenshots into `public/` with the same names to show them here.*
+*Images above are placeholders — drop screenshots into `public/` with the same names (or overwrite these SVGs) to show them here.*
 
 
 ## Diagrams
