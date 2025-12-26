@@ -132,7 +132,7 @@ Separate sections with 🌸🌸🌸 and bold headers. Include 2-3 symbolic natur
       if (window.puter && window.puter.ai && typeof window.puter.ai.chat === 'function') {
         const puterResp = await window.puter.ai.chat(prompt, { model: 'gemini-3-pro-preview' });
         if (puterResp && typeof puterResp === 'object') {
-          rawStory = puterResp.message?.content || puterResp.text || puterResp.output || puterResp.response || null;
+          rawStory = puterResp.message?.content || puterResp.message?.content?.text || puterResp.text || puterResp.output || puterResp.response || null;
         } else if (typeof puterResp === 'string') {
           rawStory = puterResp;
         } else {
@@ -140,25 +140,6 @@ Separate sections with 🌸🌸🌸 and bold headers. Include 2-3 symbolic natur
         }
       } else {
         throw new Error('Puter client not available. Ensure https://js.puter.com/v2/ is included in index.html');
-      }
-        // Send prompt to local serverless proxy which holds the API key server-side
-        const res = await axios.post('/api/geminiProxy', { prompt, model: 'gemini-3-pro-preview' }, {
-          headers: { 'Content-Type': 'application/json' }
-        });
-
-        const data = res.data;
-
-        // Try several common response shapes from Generative Language APIs
-        rawStory = data?.candidates?.[0]?.output || data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.output || data?.text || data?.response?.text;
-        if (!rawStory) {
-          // Fallback: if the proxy returned a wrapped object, try other nested shapes
-          rawStory = data?.candidates?.[0]?.content?.[0]?.text || data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        }
-
-        if (!rawStory) {
-          // If still empty, include the whole response as debug text
-          rawStory = JSON.stringify(data, null, 2);
-        }
       }
 
       const formattedStory = rawStory
