@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 // SVG Component Definitions
 const TotoroIcon = ({ className }) => (
@@ -221,9 +222,9 @@ const GhibliLanding = () => {
           </div>
   
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="/movie" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Movies</a>
-            <a href="/character" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Characters</a>
+            <div className="hidden md:flex items-center space-x-8">
+            <Link to="/movie" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Movies</Link>
+            <Link to="/character" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Characters</Link>
             <a href="#worlds" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Worlds</a>
             <a href="#gallery" className="font-medium hover:text-ghibli-teal transition-colors duration-300">Gallery</a>
             <a href="#about" className="font-medium hover:text-ghibli-teal transition-colors duration-300">About</a>
@@ -278,9 +279,9 @@ const GhibliLanding = () => {
           {/* Mobile Menu */}
 {isMenuOpen && (
   <div className={`absolute top-full left-0 right-0 md:hidden backdrop-blur-md bg-opacity-100 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-    <div className="px-8 py-4 space-y-4">
-      <a href="/movie" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Movies</a>
-      <a href="/character" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Characters</a>
+      <div className="px-8 py-4 space-y-4">
+        <Link to="/movie" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Movies</Link>
+        <Link to="/character" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Characters</Link>
       <a href="#worlds" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Worlds</a>
       <a href="#gallery" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">Gallery</a>
       <a href="#about" className="block font-medium hover:text-ghibli-teal transition-colors duration-300">About</a>
@@ -303,12 +304,12 @@ const GhibliLanding = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-teal text-ghibli-dark' : 'bg-ghibli-blue text-white'} shadow-lg hover:shadow-xl`}>
+                <Link to="/movie" className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-teal text-white' : 'bg-ghibli-blue text-gray-900'} shadow-lg hover:shadow-xl`}>
                   Explore Films
-                </button>
-                <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-transparent text-ghibli-teal border-2 border-ghibli-teal' : 'bg-transparent text-ghibli-blue border-2 border-ghibli-blue'} hover:shadow-lg`}>
+                </Link>
+                <Link to="/character" className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-transparent text-ghibli-teal border-2 border-ghibli-teal' : 'bg-transparent text-ghibli-blue border-2 border-ghibli-blue'} hover:shadow-lg`}>
                   Meet Characters
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -917,7 +918,7 @@ const GhibliLanding = () => {
                 placeholder="Your email address" 
                 className={`flex-grow px-6 py-3 rounded-full focus:outline-none ${darkMode ? 'bg-gray-600 text-white border border-gray-500 focus:border-ghibli-teal' : 'bg-white text-gray-800 border border-gray-200 focus:border-ghibli-blue'}`}
               />
-              <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-teal text-gray-900' : 'bg-ghibli-blue text-white'} shadow-lg hover:shadow-xl`}>
+              <button className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-teal text-white' : 'bg-ghibli-blue text-gray-900'} shadow-lg hover:shadow-xl`}>
                 Subscribe
               </button>
             </form>
@@ -983,7 +984,7 @@ const GhibliLanding = () => {
             </div>
             
             <div className="text-center mt-12">
-              <a href="#" className={`inline-block px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-pink text-gray-900' : 'bg-ghibli-pink text-white'} shadow-lg hover:shadow-xl`}>
+              <a href="#" className={`inline-block px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 ${darkMode ? 'bg-ghibli-pink text-white' : 'bg-ghibli-pink text-gray-900'} shadow-lg hover:shadow-xl`}>
                 Learn More About Our History
               </a>
             </div>

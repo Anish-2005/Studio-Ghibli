@@ -266,11 +266,11 @@ Separate sections with 🌸🌸🌸 and bold headers. Include 2-3 symbolic natur
                   onClick={generateStory}
                   disabled={isLoading}
                   className={`w-full py-3 rounded-lg font-ghibli transition-all flex items-center justify-center gap-2 ${
-                    isLoading 
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : darkMode 
-                      ? 'bg-ghibli-teal hover:bg-ghibli-dark-teal text-white'
-                      : 'bg-ghibli-blue hover:bg-ghibli-dark-blue text-white'
+                    isLoading
+                      ? 'bg-gray-400 cursor-not-allowed text-white'
+                      : darkMode
+                      ? 'bg-ghibli-teal hover:bg-ghibli-dark-teal text-white bg-teal-600 hover:bg-teal-700'
+                      : 'bg-ghibli-blue hover:bg-ghibli-dark-blue text-white bg-blue-600 hover:bg-blue-700'
                   }`}
                 >
                   {isLoading ? (
