@@ -126,30 +126,41 @@ const StoryCreatorPage = () => {
 Make the story 3000+ words with rich sensory details about natural environments. 
 Separate sections with 🌸🌸🌸 and bold headers. Include 2-3 symbolic nature metaphors per act.`;
   
-      // Updated API endpoint with valid model name
-      const { data } = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
-        {
-          contents: [{
-            parts: [{
-              text: prompt
-            }]
-          }],
-          safetySettings: [{
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_NONE"
-          }]
-        },
-        {
-          headers: { 
-            'Content-Type': 'application/json' 
-          }
+      let rawStory = null;
+
+      // Puter-only mode: require the client script to be present
+      if (window.puter && window.puter.ai && typeof window.puter.ai.chat === 'function') {
+        const puterResp = await window.puter.ai.chat(prompt, { model: 'gemini-3-pro-preview' });
+        if (puterResp && typeof puterResp === 'object') {
+          rawStory = puterResp.message?.content || puterResp.text || puterResp.output || puterResp.response || null;
+        } else if (typeof puterResp === 'string') {
+          rawStory = puterResp;
+        } else {
+          rawStory = JSON.stringify(puterResp, null, 2);
         }
-      );
-  
-      const rawStory = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!rawStory) throw new Error('Empty response from API');
-  
+      } else {
+        throw new Error('Puter client not available. Ensure https://js.puter.com/v2/ is included in index.html');
+      }
+        // Send prompt to local serverless proxy which holds the API key server-side
+        const res = await axios.post('/api/geminiProxy', { prompt, model: 'gemini-3-pro-preview' }, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = res.data;
+
+        // Try several common response shapes from Generative Language APIs
+        rawStory = data?.candidates?.[0]?.output || data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.output || data?.text || data?.response?.text;
+        if (!rawStory) {
+          // Fallback: if the proxy returned a wrapped object, try other nested shapes
+          rawStory = data?.candidates?.[0]?.content?.[0]?.text || data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        }
+
+        if (!rawStory) {
+          // If still empty, include the whole response as debug text
+          rawStory = JSON.stringify(data, null, 2);
+        }
+      }
+
       const formattedStory = rawStory
       .replace(/## Movie Title _(.*?)_/g, '🌿✨ $1 ✨🌿<br/><br/>🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸<br/>')
       .replace(/## Main Characters/g, '🌈 MAIN CHARACTERS<br/>🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸<br/>')
@@ -233,6 +244,7 @@ Separate sections with 🌸🌸🌸 and bold headers. Include 2-3 symbolic natur
               </h1>
               
               <div className="space-y-6">
+                {/* Using Puter client-only (no key). Checkbox removed. */}
                 <div>
                   <label className={`block mb-2 font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Story Elements 🌟
@@ -303,6 +315,7 @@ Separate sections with 🌸🌸🌸 and bold headers. Include 2-3 symbolic natur
                       className={`leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                       dangerouslySetInnerHTML={{ __html: story }}
                     />
+                    {/* response metadata intentionally hidden from UI */}
                   </div>
                 )}
               </div>

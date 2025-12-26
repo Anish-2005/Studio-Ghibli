@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Gemini Proxy Example</title>
+  </head>
+  <body>
+    <h1>Gemini Proxy Example</h1>
+    <textarea id="prompt" rows="6" cols="60">What are the major differences between renewable and non-renewable energy sources?</textarea>
+    <br />
+    <button id="send">Send</button>
+    <pre id="out"></pre>
+
+    <script>
+      document.getElementById('send').addEventListener('click', async () => {
+        const prompt = document.getElementById('prompt').value;
+        const res = await fetch('/api/geminiProxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt, model: 'gemini-3-pro-preview' })
+        });
+        const data = await res.json();
+        document.getElementById('out').textContent = JSON.stringify(data, null, 2);
+      });
+    </script>
+  </body>
+</html>
